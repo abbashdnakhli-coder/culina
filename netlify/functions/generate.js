@@ -1,4 +1,5 @@
 exports.handler = async function(event, context) {
+  // 1. معالجة طلبات Preflight (CORS)
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -26,14 +27,16 @@ exports.handler = async function(event, context) {
   try {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
 
-    // استخدام نموذج gemini-2.5-flash المستقر بدلاً من الموديلات القديمة
+    // دمج الإرشادات والطلب في نص واحد لتفادي مشاكل الهيكلة
+    const fullPrompt = systemInstruction ? `${systemInstruction}\n\n${prompt}` : prompt;
+
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: `${systemInstruction || ''}\n\n${prompt}` }] }]
+          contents: [{ parts: [{ text: fullPrompt }] }]
         })
       }
     );
@@ -41,7 +44,7 @@ exports.handler = async function(event, context) {
     const data = await response.json();
 
     return {
-      statusCode: response.status,
+      statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
@@ -51,7 +54,11 @@ exports.handler = async function(event, context) {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message })
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ error: error.message || 'حدث خطأ غير متوقع' })
     };
   }
 };
