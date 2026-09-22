@@ -126,7 +126,7 @@
           <div class="w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold">C</div>
           <div>
             <h3 class="text-xs font-bold text-stone-900 dark:text-white" data-i18n="chatChefName">مساعد كولينا الذكي</h3>
-            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Netlify Proxy • Gemini 1.5</span>
+            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Netlify Proxy • Gemini 2.5</span>
           </div>
         </div>
       </div>
@@ -309,10 +309,10 @@
       window.scrollTo(0, 0);
     }
 
-    // الربط المباشر والمحدث مع Netlify Proxy لمعالجة كافة الأخطاء
+    // الربط المباشر المحدث والمضمون مع سيرفر Netlify
     async function callGeminiAI(userPrompt, systemInstruction) {
       try {
-        const response = await fetch('/.netlify/functions/generate', {
+        const response = await fetch('https://mic-puppy-d7510e.netlify.app/.netlify/functions/generate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -492,3 +492,4 @@
   </script>
 </body>
 </html>
+
