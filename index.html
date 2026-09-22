@@ -309,23 +309,36 @@
       window.scrollTo(0, 0);
     }
 
-    // الربط المباشر والكامل مع Netlify Proxy
+    // الربط المباشر والمحدث مع Netlify Proxy لمعالجة كافة الأخطاء
     async function callGeminiAI(userPrompt, systemInstruction) {
-      const response = await fetch('/.netlify/functions/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: userPrompt,
-          systemInstruction: systemInstruction
-        })
-      });
+      try {
+        const response = await fetch('/.netlify/functions/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: userPrompt,
+            systemInstruction: systemInstruction
+          })
+        });
 
-      if (!response.ok) {
-        throw new Error(`Proxy Error: ${response.status}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.error("Netlify Function Error:", data);
+          return data.error || `خطأ في الخادم (${response.status})`;
+        }
+
+        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+          return data.candidates[0].content.parts[0].text;
+        } else if (data.error) {
+          return `خطأ من Gemini: ${data.error.message || JSON.stringify(data.error)}`;
+        } else {
+          return "لم يتم استلام نص من الذكاء الاصطناعي.";
+        }
+      } catch (err) {
+        console.error("Fetch Exception:", err);
+        throw err;
       }
-
-      const data = await response.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، متعذر الوصول للخدمة حالياً.";
     }
 
     async function executeRecipeGen() {
@@ -423,7 +436,7 @@
       }
 
       box.innerHTML = list.map(item => `
-        <div class="bg-white dark:bg-[#1a221e] rounded-2xl border border-stone-200 dark:border-stone-800 overflow-hidden shadow-sm flex flex-col sm:flex-row">
+        <div class="bg-[#white] dark:bg-[#1a221e] rounded-2xl border border-stone-200 dark:border-stone-800 overflow-hidden shadow-sm flex flex-col sm:flex-row">
           <img src="${item.image}" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'" class="w-full sm:w-28 h-28 object-cover">
           <div class="p-3 flex-1 space-y-1">
             <div class="flex justify-between items-center">
