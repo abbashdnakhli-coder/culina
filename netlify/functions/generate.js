@@ -1,5 +1,4 @@
-export async function handler(event, context) {
-  // التعامل مع طلبات Preflight (CORS)
+exports.handler = async function(event, context) {
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -18,9 +17,9 @@ export async function handler(event, context) {
   const API_KEY = process.env.GEMINI_API_KEY;
 
   if (!API_KEY) {
-    return { 
-      statusCode: 500, 
-      body: JSON.stringify({ error: 'مفتاح API غير متوفر في الخادم' }) 
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: { message: "GEMINI_API_KEY is not configured" } })
     };
   }
 
@@ -33,13 +32,13 @@ export async function handler(event, context) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: `${systemInstruction}\n\n${prompt}` }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 1000 }
+          contents: [{ role: 'user', parts: [{ text: `${systemInstruction || ''}\n\n${prompt || ''}` }] }]
         })
       }
     );
 
     const data = await response.json();
+
     return {
       statusCode: 200,
       headers: {
@@ -49,9 +48,9 @@ export async function handler(event, context) {
       body: JSON.stringify(data)
     };
   } catch (error) {
-    return { 
-      statusCode: 500, 
-      body: JSON.stringify({ error: 'حدث خطأ أثناء الاتصال بالخادم' }) 
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message })
     };
   }
-}
+};
