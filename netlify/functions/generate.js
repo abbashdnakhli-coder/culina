@@ -27,7 +27,7 @@ exports.handler = async function(event, context) {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
     const fullPrompt = systemInstruction ? `${systemInstruction}\n\n${prompt}` : prompt;
 
-    // تم التحديث إلى gemini-2.5-flash بناءً على تعليمات الـ API
+    // تم تصحيح الموديل إلى gemini-2.5-flash
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
       {
