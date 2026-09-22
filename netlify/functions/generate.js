@@ -11,7 +11,7 @@ exports.handler = async function(event, context) {
   }
 
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
   const API_KEY = process.env.GEMINI_API_KEY;
@@ -19,7 +19,7 @@ exports.handler = async function(event, context) {
   if (!API_KEY) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: { message: "GEMINI_API_KEY is not configured" } })
+      body: JSON.stringify({ error: "GEMINI_API_KEY غير معرف في بيئة Netlify" })
     };
   }
 
