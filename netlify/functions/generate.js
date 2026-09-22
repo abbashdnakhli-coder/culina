@@ -1,5 +1,4 @@
 exports.handler = async function(event, context) {
-  // 1. معالجة طلبات Preflight (CORS)
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -27,9 +26,9 @@ exports.handler = async function(event, context) {
   try {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
 
-    // دمج الإرشادات والطلب في نص واحد لتفادي مشاكل الهيكلة
     const fullPrompt = systemInstruction ? `${systemInstruction}\n\n${prompt}` : prompt;
 
+    // تم التحديث إلى الموديل المطلوبة: gemini-2.5-flash
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
       {
