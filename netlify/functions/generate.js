@@ -25,10 +25,9 @@ exports.handler = async function(event, context) {
 
   try {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
-
     const fullPrompt = systemInstruction ? `${systemInstruction}\n\n${prompt}` : prompt;
 
-    // تم التحديث إلى الموديل المطلوبة: gemini-2.5-flash
+    // تم التحديث إلى gemini-2.5-flash بناءً على تعليمات الـ API
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
       {
@@ -53,10 +52,6 @@ exports.handler = async function(event, context) {
   } catch (error) {
     return {
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify({ error: error.message || 'حدث خطأ غير متوقع' })
     };
   }
