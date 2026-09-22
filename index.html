@@ -126,7 +126,7 @@
           <div class="w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold">C</div>
           <div>
             <h3 class="text-xs font-bold text-stone-900 dark:text-white" data-i18n="chatChefName">مساعد كولينا الذكي</h3>
-            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Netlify Proxy • Gemini 2.5</span>
+            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Gemini 2.5 • Active</span>
           </div>
         </div>
       </div>
@@ -154,7 +154,7 @@
           <div class="w-10 h-10 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">C</div>
           <div>
             <h3 id="profileNameDisplay" class="font-bold text-stone-900 dark:text-white text-xs">زائر كولينا</h3>
-            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold" data-i18n="subStatus">باقة مجانية (Netlify Active)</span>
+            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold" data-i18n="subStatus">باقة مجانية (Active)</span>
           </div>
         </div>
         <button onclick="openAuthModal()" class="text-xs text-emerald-700 font-bold underline" data-i18n="loginBtn">تسجيل الدخول</button>
@@ -163,7 +163,7 @@
       <div class="bg-white dark:bg-[#1a221e] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-3">
         <h4 class="font-bold text-xs text-stone-900 dark:text-white border-b border-stone-100 dark:border-stone-800 pb-2" data-i18n="privacyTitle">🔒 الخصوصية والامتثال القوانين السعودية</h4>
         <p class="text-[11px] text-stone-500 leading-relaxed" data-i18n="privacyBody">
-          تطبيق كولينا يلتزم تماماً بنظام حماية البيانات الشخصية (PDPL) بالمملكة العربية السعودية. تتم معالجة استعلاماتك عبر خادم Netlify آمن دون مشاركة أسرارك أو بياناتك مع أي طرف ثالث.
+          تطبيق كولينا يلتزم تماماً بنظام حماية البيانات الشخصية (PDPL) بالمملكة العربية السعودية. تتم معالجة استعلاماتك عبر خادم آمن دون مشاركة أسرارك أو بياناتك مع أي طرف ثالث.
         </p>
       </div>
     </section>
@@ -229,10 +229,10 @@
         btnExecuteGen: "توليد الوصفة والصورة وحساب السعرات ✨",
         chatChefName: "مساعد كولينا الذكي",
         chatWelcome: "أهلاً بك في كولينا! أنا مساعدك المباشر لجميع استفسارات الطهي والأغذية.",
-        subStatus: "باقة مجانية (Netlify Active)",
+        subStatus: "باقة مجانية (Active)",
         loginBtn: "تسجيل الدخول",
         privacyTitle: "🔒 الخصوصية والامتثال القوانين السعودية",
-        privacyBody: "تطبيق كولينا يلتزم تماماً بنظام حماية البيانات الشخصية (PDPL) بالمملكة العربية السعودية. تتم معالجة استعلاماتك عبر خادم Netlify آمن دون مشاركة أسرارك أو بياناتك مع أي طرف ثالث.",
+        privacyBody: "تطبيق كولينا يلتزم تماماً بنظام حماية البيانات الشخصية (PDPL) بالمملكة العربية السعودية. تتم معالجة استعلاماتك عبر خادم آمن دون مشاركة أسرارك أو بياناتك مع أي طرف ثالث.",
         modalAuthTitle: "تسجيل الدخول",
         modalAuthDesc: "اختر وسيلة الدخول المناسبة لجهازك (iOS / Android):",
         tabHome: "الرئيسية", tabGen: "ابتكار", tabChat: "المساعد", tabProfile: "حسابي",
@@ -252,7 +252,7 @@
         btnExecuteGen: "Generate Recipe, Image & Calories ✨",
         chatChefName: "Culina AI Assistant",
         chatWelcome: "Welcome to Culina! I am your AI cooking assistant.",
-        subStatus: "Free Plan (Netlify Active)",
+        subStatus: "Free Plan (Active)",
         loginBtn: "Sign In",
         privacyTitle: "🔒 Privacy & Saudi PDPL Compliance",
         privacyBody: "Culina strictly complies with Saudi Personal Data Protection Law (PDPL). Your requests are safely proxied.",
@@ -309,18 +309,10 @@
       window.scrollTo(0, 0);
     }
 
-    // الربط المباشر المحدث والمضمون مع سيرفر Netlify
-async function callGeminiAI(userPrompt, systemInstruction) {
-  try {
-    const response = await fetch('/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        prompt: userPrompt,
-        systemInstruction: systemInstruction
-      })
-    });
-
+    // الربط المباشر الداخلي
+    async function callGeminiAI(userPrompt, systemInstruction) {
+      try {
+        const response = await fetch('/generate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -332,7 +324,7 @@ async function callGeminiAI(userPrompt, systemInstruction) {
         const data = await response.json();
 
         if (!response.ok) {
-          console.error("Netlify Function Error:", data);
+          console.error("Function Error:", data);
           return data.error || `خطأ في الخادم (${response.status})`;
         }
 
@@ -394,7 +386,7 @@ async function callGeminiAI(userPrompt, systemInstruction) {
         `;
       } catch (err) {
         console.error(err);
-        alert(currentLang === 'ar' ? 'حدث خطأ أثناء الاتصال بالذكاء الاصطناعي. تأكد من اكتمال نشر Netlify.' : 'AI Service Error. Check Netlify deployment.');
+        alert(currentLang === 'ar' ? 'حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.' : 'AI Service Error.');
       } finally {
         btn.disabled = false;
         btn.textContent = i18n[currentLang].btnExecuteGen;
@@ -481,7 +473,7 @@ async function callGeminiAI(userPrompt, systemInstruction) {
         box.innerHTML += `<div class="flex justify-start"><div class="bg-white dark:bg-[#1a221e] border border-stone-200 dark:border-stone-800 p-2.5 rounded-2xl max-w-[85%] text-xs text-stone-800 dark:text-stone-200 whitespace-pre-line">${reply}</div></div>`;
       } catch (err) {
         document.getElementById(loaderId)?.remove();
-        box.innerHTML += `<div class="flex justify-start"><div class="bg-rose-100 text-rose-800 p-2.5 rounded-2xl text-xs">تعذر الاتصال بالمساعد. تأكد من إعداد سيرفر Netlify.</div></div>`;
+        box.innerHTML += `<div class="flex justify-start"><div class="bg-rose-100 text-rose-800 p-2.5 rounded-2xl text-xs">تعذر الاتصال بالمساعد.</div></div>`;
       }
       box.scrollTop = box.scrollHeight;
     }
