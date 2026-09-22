@@ -1,30 +1,481 @@
-<!DOCTYPE html> <html lang="ar" dir="rtl"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <title>Culina | كولينا</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet"> <script src="https://cdn.tailwindcss.com"></script> <script> tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: { 50: '#f2f8f5', 100: '#e1efe8', 500: '#2d5a46', 600: '#244837', 700: '#1a3729' }, culina: { cream: '#fcf9f3', dark: '#121815', cardDark: '#1a221e' } }, fontFamily: { serif: ['"Playfair Display"', 'serif'], cairo: ['Cairo', 'sans-serif'] } } } }; </script> <style> body { font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; } .hero-title { font-family: 'Playfair Display', serif; } .hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } @keyframes pulse-fast { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } } .animate-pulse-fast { animation: pulse-fast 1s cubic-bezier(0.4, 0, 0.6, 1) infinite; } </style> </head> <body class="bg-[#fcf9f3] dark:bg-[#121815] text-stone-800 dark:text-stone-100 transition-colors duration-300 min-h-screen pb-24 flex flex-col"> <!-- شريط العنوان العلوي --> <header class="sticky top-0 z-40 bg-[#fcf9f3]/95 dark:bg-[#121815]/95 backdrop-blur border-b border-stone-200 dark:border-stone-800 px-4 py-3 flex items-center justify-between"> <div class="flex items-center gap-2"> <button id="themeToggleBtn" onclick="toggleThemeMode()" type="button" class="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 transition text-stone-700 dark:text-stone-300 text-lg"> <span id="themeIcon">🌙</span> </button> <button onclick="navTo('explore')" type="button" class="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 transition text-stone-700 dark:text-stone-300"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg> </button> </div> <div onclick="navTo('home')" class="cursor-pointer flex items-center gap-1"> <span class="text-2xl font-serif font-bold text-emerald-800 dark:text-emerald-400">.culina</span> <span class="w-2 h-2 rounded-full bg-amber-600 inline-block mb-1"></span> </div> <div class="flex items-center gap-1.5"> <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> <span class="text-xs px-2.5 py-1 rounded-full font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-600/20">Gemini متصل</span> </div> </header> <main class="flex-1 max-w-lg mx-auto w-full px-4 py-4"> <!-- 1. الرئيسية --> <section id="view-home" class="page-sec space-y-6"> <div class="text-center pt-2 space-y-3"> <p class="text-[11px] uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold"> THE MIDDLE EASTERN KITCHEN </p> <h1 class="hero-title text-4xl sm:text-5xl font-bold leading-tight text-stone-900 dark:text-white"> Recipes with<br><span class="italic text-emerald-700 dark:text-emerald-400">a sense</span><br>.of place </h1> <p class="text-xs sm:text-sm text-stone-600 dark:text-stone-300 leading-relaxed max-w-xs mx-auto"> أطباق موثوقة من الشرق الأوسط، مكتوبة لمطابخنا اليومية. إرشاد هادئ ومساعد ذكي مدعوم بـ Google Gemini. </p> </div> <div class="grid grid-cols-2 gap-3 pt-1"> <button onclick="navTo('chat')" type="button" class="py-3 px-4 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-[#1a221e] shadow-sm font-bold text-stone-800 dark:text-stone-100 flex items-center justify-center gap-2 active:scale-95 transition"> <span>اسأل الشيف</span> <span class="text-amber-500">✨</span> </button> <button onclick="navTo('generator')" type="button" class="py-3 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white shadow-md font-bold flex items-center justify-center gap-2 active:scale-95 transition"> <span>ابتكر وصفة</span> <span>🍳</span> </button> </div> <div class="flex items-center justify-center gap-2 text-xs text-stone-500 dark:text-stone-400 pt-1"> <span class="inline-flex -space-x-1 space-x-reverse"> <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-[10px]">S</span> <span class="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-[10px]">R</span> <span class="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[10px]">N</span> </span> <span>أكثر من <strong>+12,000</strong> طاهٍ يطبخون معنا يومياً</span> </div> <div class="space-y-3 pt-3"> <div class="flex items-center justify-between"> <h3 class="font-bold text-stone-900 dark:text-white text-base">🌿 وصفات الموسم الأصيلة</h3> <button onclick="navTo('explore')" type="button" class="text-xs text-emerald-700 dark:text-emerald-400 font-bold hover:underline">عرض الكل</button> </div> <div id="homeCardsContainer" class="space-y-3"></div> </div> </section> <!-- 2. مستكشف الأطباق --> <section id="view-explore" class="page-sec hidden space-y-4"> <div class="pb-2 border-b border-stone-200 dark:border-stone-800"> <h2 class="text-xl font-bold text-stone-900 dark:text-white">مستكشف الأطباق</h2> <p class="text-xs text-stone-500">أشهى الوصفات من بلاد الشام، الخليج، وشمال أفريقيا</p> </div> <div class="flex gap-2 overflow-x-auto pb-1 hide-scrollbar text-xs"> <button onclick="applyCategoryFilter('all', this)" type="button" class="cat-pill px-3.5 py-1.5 rounded-full bg-emerald-700 text-white font-bold">الكل</button> <button onclick="applyCategoryFilter('main', this)" type="button" class="cat-pill px-3.5 py-1.5 rounded-full bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-medium">أطباق رئيسية</button> <button onclick="applyCategoryFilter('breakfast', this)" type="button" class="cat-pill px-3.5 py-1.5 rounded-full bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-medium">فطور</button> <button onclick="applyCategoryFilter('dessert', this)" type="button" class="cat-pill px-3.5 py-1.5 rounded-full bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-medium">حلويات</button> </div> <div id="exploreCardsContainer" class="space-y-3"></div> </section> <!-- 3. ابتكار الوصفات --> <section id="view-generator" class="page-sec hidden space-y-4"> <div class="pb-2 border-b border-stone-200 dark:border-stone-800"> <div class="flex items-center justify-between"> <h2 class="text-xl font-bold text-stone-900 dark:text-white">🍳 ابتكار الوصفات</h2> <span class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">Gemini AI</span> </div> <p class="text-xs text-stone-500">اكتب المكونات المتوفرة لديك وسيبتكر لك الذكاء الاصطناعي وجبة متكاملة فوراً.</p> </div> <div class="bg-white dark:bg-[#1a221e] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-3"> <div> <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 mb-1">المكونات المتوفرة لديك:</label> <input id="inputIngs" type="text" placeholder="مثال: دجاج، أرز، بصل، بهارات..." class="w-full px-3 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"> </div> <button onclick="executeRecipeGen()" id="btnGenAction" type="button" class="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold text-sm shadow active:scale-95 transition flex items-center justify-center gap-2"> <span>ابتكار الوصفة بالذكاء الاصطناعي ✨</span> </button> </div> <div id="genResultCard" class="hidden"></div> </section> <!-- 4. شات الشيف الذكي --> <section id="view-chat" class="page-sec hidden flex flex-col h-[74vh]"> <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-800"> <div class="flex items-center gap-2"> <div class="w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center text-sm shadow">👨‍🍳</div> <div> <h3 class="text-sm font-bold text-stone-900 dark:text-white">شيف كولينا الذكي</h3> <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">● متصل بـ Gemini AI حي</span> </div> </div> <button onclick="resetChefChat()" type="button" class="text-xs text-stone-400 hover:text-stone-600 dark:hover:text-stone-200">مسح المحادثة</button> </div> <div id="chatScrollArea" class="flex-1 overflow-y-auto py-3 space-y-3 hide-scrollbar text-xs"> <div class="flex items-start gap-2 max-w-[85%]"> <div class="w-7 h-7 rounded-full bg-stone-200 dark:bg-stone-700 flex items-center justify-center text-xs">👨‍🍳</div> <div class="bg-white dark:bg-[#1a221e] p-3 rounded-2xl rounded-tr-none border border-stone-200 dark:border-stone-800 shadow-sm leading-relaxed text-stone-800 dark:text-stone-200"> أهلاً بك في مطبخ كولينا! 🌿 أنا شيفك ومساعدك الذكي. اسألني عن أسرار الطهي، بدائل المقادير، أو طرق التتبيل وسأجيبك فوراً! </div> </div> </div> <div class="flex gap-1.5 overflow-x-auto py-2 hide-scrollbar text-[11px]"> <button onclick="quickPromptSend('ما هو أفضل بديل للسماق في الفتوش؟')" type="button" class="whitespace-nowrap px-3 py-1rounded-full bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300">بديل السماق؟</button> <button onclick="quickPromptSend('سر نجاح الأرز المفلفل بدون أن يتعجن؟')" type="button" class="whitespace-nowrap px-3 py-1 rounded-full bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300">أرز مفلفل مثالي</button> <button onclick="quickPromptSend('كيف أعالج زيادة الملح في الإيدام؟')" type="button" class="whitespace-nowrap px-3 py-1 rounded-full bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300">علاج الملح الزائد</button> </div> <form onsubmit="onChefChatSubmit(event)" class="relative mt-1"> <input id="chefInputField" type="text" placeholder="اكتب سؤالك للشيف الذكي..." class="w-full px-4 py-3 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-[#1a221e] text-xs focus:outline-none focus:ring-2 focus:ring-emerald-600 pl-11 shadow-sm"> <button id="chefSendBtn" type="submit" class="absolute left-2 top-2 p-1.5 bg-emerald-700 text-white rounded-lg active:scale-90 transition"> <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg> </button> </form> </section> <!-- 5. حسابي والمفضلة --> <section id="view-profile" class="page-sec hidden space-y-4"> <div class="bg-white dark:bg-[#1a221e] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm flex items-center gap-3"> <div class="w-12 h-12 rounded-full bg-emerald-700 text-white flex items-center justify-center text-xl font-bold">👤</div> <div class="flex-1"> <h3 class="font-bold text-stone-900 dark:text-white text-sm">طاهي كولينا</h3> <p class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">عضوية برو نشطة ✦</p> <span class="text-[10px] text-stone-400">حماية الخصوصية مفعّلة</span> </div> </div> <div class="space-y-2"> <div class="flex items-center justify-between"> <h4 class="text-xs font-bold text-stone-800 dark:text-stone-200">الوصفات المحفوظة في مفضلتي</h4> <span id="savedBadgeCount" class="text-xs bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">0</span> </div> <div id="savedRecipesList" class="space-y-2"></div> </div> </section> </main> <!-- شريط التنقل السفلي --> <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#121815]/95 backdrop-blur border-t border-stone-200 dark:border-stone-800 py-2"> <div class="max-w-md mx-auto grid grid-cols-5 text-center text-[10px] font-bold text-stone-500"> <button onclick="navTo('home')" id="tabBtn-home" type="button" class="tab-btn text-emerald-700 dark:text-emerald-400 flex flex-col items-center gap-1"> <span class="text-lg">🌿</span> <span>الرئيسية</span> </button> <button onclick="navTo('explore')" id="tabBtn-explore" type="button" class="tab-btn flex flex-col items-center gap-1"> <span class="text-lg">🍲</span> <span>استكشف</span> </button> <button onclick="navTo('generator')" id="tabBtn-generator" type="button" class="tab-btn flex flex-col items-center gap-1"> <span class="text-lg">🍳</span> <span>ابتكار</span> </button> <button onclick="navTo('chat')" id="tabBtn-chat" type="button" class="tab-btn flex flex-col items-center gap-1"> <span class="text-lg">💬</span> <span>المساعد</span> </button> <button onclick="navTo('profile')" id="tabBtn-profile" type="button" class="tab-btn flex flex-col items-center gap-1"> <span class="text-lg">👤</span> <span>حسابي</span> </button> </div> </nav> <script> var CULINA_KEY = 'AQ.Ab8RN6JUDrng8tRDd2witkwZWFe9dWJcCPcKYCXAvNXJgTCQQA'; var culinaRecipes = [ { id: '1', title: 'شكشوكة بالأعشاب والفيتا', cat: 'breakfast', time: '25 دقيقة', cal: '340 سعرة', desc: 'طماطم ناضجة مطهوة ببطء مع فلفل بلدي وبيض وجبن الفيتا والنعناع.', items: ['4 بيضات طازجة', '3 حبات طماطم مفرومة', 'فصين ثوم', 'جبنة فيتا', 'زيت زيتون', 'نعناع طازج'], steps: ['تشويح الثوم والفلفل بزيت الزيتون.', 'إضافة الطماطم وتركها تتسبك 10 دقائق.', 'كسر البيض والطهي حتى ينضج.', 'التزيين بالفيتا والنعناع.'] }, { id: '2', title: 'صيادية سمك بالبصل المكرمل', cat: 'main', time: '45 دقيقة', cal: '520 سعرة', desc: 'أرز بني بنكهة البصل المحمص بعناية مع السمك والمكسرات المقرمشة.', items: ['كيلو سمك فيليه', 'كوبين أرز', '3 بصلات شرائح', 'بهارات صيادية', 'صنوبر ولوز'], steps: ['تحمير البصل حتى يكتسب لوناً بنياً ذهبياً.', 'طبخ الأرز بمرق البصل المركز.', 'قلي أو شواء السمك المتبل.', 'سكب الأرز وفوقه السمك والمكسرات.'] }, { id: '3', title: 'كنافة نابلسية بالجبن البلدي', cat: 'dessert', time: '35 دقيقة', cal: '450 سعرة', desc: 'عجينة الكنافة الذهبية بالسمن العربي مع الجبن العكاوي والقطر المعطر.', items: ['عجينة كنافة', 'سمن بلدي', 'جبن عكاوي محلى', 'فستق حلبي', 'شيرة بماء الزهر'], steps: ['فرك الكنافة بالسمن جيداً.', 'فرد الكنافة وتوزيع الجبن فوقها.', 'الطهي بهدوء حتى يكتسب القاع لوناً ذهبياً.', 'قلبها وسكب الشيرة الدافئة وتزيينها.'] } ]; var savedIds = []; try { savedIds = JSON.parse(localStorage.getItem('culina_saved') || '[]'); } catch(e) { savedIds = []; } function navTo(page) { var views = document.querySelectorAll('.page-sec'); for (var i = 0; i < views.length; i++) { views[i].classList.add('hidden'); } var target = document.getElementById('view-' + page); if (target) target.classList.remove('hidden'); var tabs = document.querySelectorAll('.tab-btn'); for (var j = 0; j < tabs.length; j++) { tabs[j].classList.remove('text-emerald-700', 'dark:text-emerald-400'); tabs[j].classList.add('text-stone-500'); } var activeTab = document.getElementById('tabBtn-' + page); if (activeTab) { activeTab.classList.remove('text-stone-500'); activeTab.classList.add('text-emerald-700', 'dark:text-emerald-400'); } window.scrollTo(0, 0); if (page === 'profile') updateSavedView(); } function toggleThemeMode() { var html = document.documentElement; var icon = document.getElementById('themeIcon'); if (html.classList.contains('dark')) { html.classList.remove('dark'); if (icon) icon.textContent = '🌙'; localStorage.setItem('culina_theme', 'light'); } else { html.classList.add('dark'); if (icon) icon.textContent = '☀️'; localStorage.setItem('culina_theme', 'dark'); } } function renderHomeCards() { var box = document.getElementById('homeCardsContainer'); if (!box) return; var html = ''; for (var i = 0; i < 2 && i < culinaRecipes.length; i++) { var r = culinaRecipes[i]; var isSaved = savedIds.indexOf(r.id) !== -1; html += '<div class="bg-white dark:bg-[#1a221e] rounded-2xl p-4 border border-stone-200 dark:border-stone-800 shadow-sm">' + '<div class="flex justify-between text-[11px] text-stone-400 mb-1">' + '<span>⏱️ ' + r.time + '</span>' + '<span class="text-amber-600 font-bold">🔥 ' + r.cal + '</span>' + '</div>' + '<h4 class="font-bold text-sm text-stone-900 dark:text-white mb-1">' + r.title + '</h4>' + '<p class="text-xs text-stone-500 dark:text-stone-400 mb-3">' + r.desc + '</p>' + '<div class="flex justify-between items-center pt-2 border-t border-stone-100 dark:border-stone-800">' + '<button onclick="toggleSaveRecipe(\'' + r.id + '\')" type="button" class="text-xs font-bold text-stone-500">' + (isSaved ? '❤️ محفوظة' : '🤍 حفظ') + '</button>' + '<button onclick="showRecipeModal(\'' + r.id + '\')" type="button" class="text-xs bg-emerald-700 text-white px-3 py-1.5 rounded-lg font-bold">عرض الطريقة</button>' + '</div>' + '</div>'; } box.innerHTML = html; } function applyCategoryFilter(cat, btn) { var pills = document.querySelectorAll('.cat-pill'); for (var i = 0; i < pills.length; i++) { pills[i].classList.remove('bg-emerald-700', 'text-white'); pills[i].classList.add('bg-stone-200', 'dark:bg-stone-800', 'text-stone-700', 'dark:text-stone-300'); } if (btn) { btn.classList.add('bg-emerald-700', 'text-white'); btn.classList.remove('bg-stone-200', 'dark:bg-stone-800'); } var box = document.getElementById('exploreCardsContainer'); if (!box) return; var html = ''; for (var j = 0; j < culinaRecipes.length; j++) { var r = culinaRecipes[j]; if (cat !== 'all' && r.cat !== cat) continue; var isSaved = savedIds.indexOf(r.id) !== -1; html += '<div class="bg-white dark:bg-[#1a221e] rounded-2xl p-4 border border-stone-200 dark:border-stone-800 shadow-sm">' + '<div class="flex justify-between text-[11px] text-stone-400 mb-1">' + '<span>' + r.time + '</span>' + '<span>' + r.cal + '</span>' + '</div>' + '<h4 class="font-bold text-sm text-stone-900 dark:text-white mb-1">' + r.title + '</h4>' + '<p class="text-xs text-stone-500 mb-3">' + r.desc + '</p>' + '<div class="flex justify-between items-center">' + '<button onclick="toggleSaveRecipe(\'' + r.id + '\')" type="button" class="text-xs">' + (isSaved ? '❤️' : '🤍') + '</button>' + '<button onclick="showRecipeModal(\'' + r.id + '\')" type="button" class="text-xs text-emerald-700 dark:text-emerald-400 font-bold">التفاصيل ←</button>' + '</div>' + '</div>'; } box.innerHTML = html; } function toggleSaveRecipe(id) { var idx = savedIds.indexOf(id); if (idx !== -1) { savedIds.splice(idx, 1); } else { savedIds.push(id); } localStorage.setItem('culina_saved', JSON.stringify(savedIds)); renderHomeCards(); applyCategoryFilter('all', null); updateSavedView(); } function updateSavedView() { var countEl = document.getElementById('savedBadgeCount'); if (countEl) countEl.textContent = savedIds.length; var box = document.getElementById('savedRecipesList'); if (!box) return; if (savedIds.length === 0) { box.innerHTML = '<p class="text-xs text-stone-400 text-center py-6">لم تقم بحفظ أي وصفة بعد.</p>'; return; } var html = ''; for (var i = 0; i < culinaRecipes.length; i++) { var r = culinaRecipes[i]; if (savedIds.indexOf(r.id) !== -1) { html += '<div class="p-3 bg-white dark:bg-[#1a221e] rounded-xl border border-stone-200 dark:border-stone-800 flex justify-between items-center">' + '<div><h5 class="text-xs font-bold text-stone-900 dark:text-white">' + r.title + '</h5><span class="text-[10px] text-stone-400">' + r.time + '</span></div>' + '<button onclick="showRecipeModal(\'' + r.id + '\')" type="button" class="text-xs text-emerald-700 font-bold">عرض</button>' + '</div>'; } } box.innerHTML = html; } function showRecipeModal(id) { var found = null; for (var i = 0; i < culinaRecipes.length; i++) { if (culinaRecipes[i].id === id) { found = culinaRecipes[i]; break; } } if (!found) return; alert('🍽️ ' + found.title + '\n\n⏱️ الوقت: ' + found.time + ' | ' + found.cal + '\n\nالمكونات:\n- ' + found.items.join('\n- ') + '\n\nخطوات التحضير:\n1. ' + found.steps.join('\n2. ')); } async function callGeminiApi(promptText, systemInstruction) { var url ='https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + encodeURIComponent(CULINA_KEY); var payload = { contents: [{ role: 'user', parts: [{ text: (systemInstruction ? systemInstruction + '\n\n' : '') + promptText }] }], generationConfig: { temperature: 0.7, maxOutputTokens: 800 } }; var res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!res.ok) { var errData = await res.json().catch(function(){ return {}; }); throw new Error((errData.error && errData.error.message) || ('فشل الاتصال (' + res.status + ')')); } var data = await res.json(); if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) { return data.candidates[0].content.parts[0].text; } return 'عذراً، لم أتلقَّ استجابة من الذكاء الاصطناعي.'; } async function executeRecipeGen() { var val = document.getElementById('inputIngs').value.trim(); var btn = document.getElementById('btnGenAction'); var res = document.getElementById('genResultCard'); if (!val) { alert('يرجى كتابة المكونات المتوفرة لديك أولاً!'); return; } btn.innerHTML = '<span class="animate-pulse-fast">جارٍ الابتكار بـ Gemini AI... ⏳</span>'; btn.disabled = true; try { var prompt = 'ابتكر وصفة شرقية شهية باستخدام: (' + val + '). اذكر اسم الوصفة بالسطر الأول، ثم الوقت والسعرات، ثم المكونات، ثم 3 خطوات واضحة.'; var sysPrompt = 'أنت الشيف التنفيذي لتطبيق كولينا (Culina). خبير في فنون الطهي العربي والمقادير المتوازنة.'; var aiReply = await callGeminiApi(prompt, sysPrompt); var newId = 'ai_' + Date.now(); var customRecipe = { id: newId, title: 'ابتكار كولينا بـ (' + val + ')', cat: 'main', time: '30 دقيقة', cal: '420 سعرة', desc: 'وصفة مبتكرة خصيصاً لك بواسطة Google Gemini.', items: [val, 'بهارات كولينا', 'زيت زيتون بكر'], steps: ['تحضير المكونات وغسلها جيداً.', 'اتباع إرشادات الشيف الموضحة أدناه.'] }; culinaRecipes.push(customRecipe); res.classList.remove('hidden'); res.innerHTML = '<div class="bg-emerald-50 dark:bg-emerald-950/40 p-4 rounded-2xl border border-emerald-600/30 space-y-3">' + '<div class="flex justify-between items-center">' + '<span class="text-xs font-bold text-emerald-800 dark:text-emerald-300">✦ وصفة مبتكرة عبر Gemini AI</span>' + '<button onclick="toggleSaveRecipe(\'' + newId + '\')" type="button" class="text-xs bg-emerald-700 text-white px-3 py-1 rounded-lg font-bold">حفظ بالمفضلة ❤️</button>' + '</div>' + '<div class="text-xs leading-relaxed text-stone-800 dark:text-stone-200 whitespace-pre-line">' + aiReply + '</div>' + '</div>'; } catch (err) { res.classList.remove('hidden'); res.innerHTML = '<div class="bg-emerald-50 dark:bg-emerald-950/40 p-4 rounded-2xl border border-emerald-600/30 space-y-2">' + '<div class="flex justify-between items-center"><span class="text-xs font-bold text-emerald-800 dark:text-emerald-300">✦ وصفة مقترحة</span><span class="text-[10px] bg-emerald-200 dark:bg-emerald-900 px-2 py-0.5 rounded-full font-bold">30 دقيقة</span></div>' + '<h4 class="font-bold text-sm text-stone-900 dark:text-white">طاجن المذاق الشرقي بـ (' + val + ')</h4>' + '<p class="text-xs text-stone-600 dark:text-stone-300">تشويح المكونات بزيت الزيتون وإضافة بهار الهيل والكزبرة وتترك لتتسبك 20 دقيقة.</p>' + '</div>'; } btn.innerHTML = '<span>ابتكار الوصفة بالذكاء الاصطناعي ✨</span>'; btn.disabled = false; } async function onChefChatSubmit(e) { if (e) e.preventDefault(); var input = document.getElementById('chefInputField'); var val = input.value.trim(); if (!val) return; var box = document.getElementById('chatScrollArea'); box.innerHTML += '<div class="flex justify-end"><div class="bg-emerald-700 text-white p-3 rounded-2xl rounded-tl-none max-w-[85%] text-xs leading-relaxed">' + val + '</div></div>'; input.value = ''; box.scrollTop = box.scrollHeight; var loadingId = 'loadingMsg_' + Date.now(); box.innerHTML += '<div id="' + loadingId + '" class="flex items-start gap-2 max-w-[85%]">' + '<div class="w-7 h-7 rounded-full bg-stone-200 dark:bg-stone-700 flex items-center justify-center text-xs">👨‍🍳</div>' + '<div class="bg-white dark:bg-[#1a221e] p-3 rounded-2xl rounded-tr-none border border-stone-200 dark:border-stone-800 shadow-sm text-xs text-stone-500 animate-pulse-fast">' + 'شيف كولينا يفكر... 🌿' + '</div></div>'; box.scrollTop = box.scrollHeight; try { var sysPrompt = 'أنت شيف كولينا الذكي في تطبيق كولينا. تتحدث بلغة عربية دافئة وودودة وموجزة، خبير في المطبخ العربي والبدائل الذكية.'; var aiResponse = await callGeminiApi(val, sysPrompt); var loadEl = document.getElementById(loadingId); if (loadEl) loadEl.remove(); box.innerHTML += '<div class="flex items-start gap-2 max-w-[85%]">' + '<div class="w-7 h-7 rounded-full bg-emerald-700 text-white flex items-center justify-center text-xs shadow">👨‍🍳</div>' + '<div class="bg-white dark:bg-[#1a221e] p-3 rounded-2xl rounded-tr-none border border-stone-200 dark:border-stone-800 shadow-sm leading-relaxed text-stone-800 dark:text-stone-200 whitespace-pre-line">' + aiResponse + '</div></div>'; box.scrollTop = box.scrollHeight; } catch (err) { var loadElErr = document.getElementById(loadingId); if (loadElErr) loadElErr.remove(); var fallbackReply = 'نصيحة شيف كولينا: لضمان نكهة متكاملة وشهية، احرص على تشويح الأساس العطري بزيت الزيتون على نار هادئة، وضبط الملح في النهاية. 🌿'; if (val.indexOf('سماق') !== -1) fallbackReply = 'أفضل بديل للسماق هو عصير وبشر قشر الليمون!'; if (val.indexOf('أرز') !== -1 || val.indexOf('ارز') !== -1) fallbackReply = 'سر الأرز المفلفل: اغسله جيداً وشوحه بالسمنة قبل إضافة الماء المغلي!'; if (val.indexOf('ملح') !== -1) fallbackReply = 'لإصلاح الملح الزائد: ضع حبة بطاطس نيئة بالقدر لتمتص الملوحة!'; box.innerHTML += '<div class="flex items-start gap-2 max-w-[85%]">' + '<div class="w-7 h-7 rounded-full bg-stone-200 dark:bg-stone-700 flex items-center justify-center text-xs">👨‍🍳</div>' + '<div class="bg-white dark:bg-[#1a221e] p-3 rounded-2xl rounded-tr-none border border-stone-200 dark:border-stone-800 shadow-sm leading-relaxed text-stone-800 dark:text-stone-200">' + fallbackReply + '</div></div>'; box.scrollTop = box.scrollHeight; } } function quickPromptSend(text) { document.getElementById('chefInputField').value = text; onChefChatSubmit(null); } function resetChefChat() { document.getElementById('chatScrollArea').innerHTML = '<div class="flex items-start gap-2 max-w-[85%]"><div class="w-7 h-7 rounded-full bg-stone-200 dark:bg-stone-700 flex items-center justify-center text-xs">👨‍🍳</div><div class="bg-white dark:bg-[#1a221e] p-3 rounded-2xl rounded-tr-none border border-stone-200 dark:border-stone-800 shadow-sm leading-relaxed text-stone-800 dark:text-stone-200">تم تجديد المحادثة! 🌿 كيف يمكنني مساعدتك في طهي اليوم؟</div></div>'; } // تهيئة فورية عند تحميل الصفحة window.addEventListener('DOMContentLoaded', function() { renderHomeCards(); applyCategoryFilter('all', null); if (localStorage.getItem('culina_theme') === 'dark') { document.documentElement.classList.add('dark'); var icon = document.getElementById('themeIcon'); if (icon) icon.textContent = '☀️'; } }); </script> <script>
-// Culina AI Engine - Connected to Google Gemini API
-const GEMINI_API_KEY = "AQ.Ab8RN6JCc8gp-_gjgwCvXwB3c0TMHWKMiKjQL0FbDQd1Acv5GA"; 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Culina | كولينا</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#f2f8f5', 100: '#e1efe8', 500: '#2d5a46', 600: '#244837', 700: '#1a3729' },
+            culina: { cream: '#fcf9f3', dark: '#121815', cardDark: '#1a221e' }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            cairo: ['Cairo', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+    .hero-title { font-family: 'Playfair Display', serif; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-[#fcf9f3] dark:bg-[#121815] text-stone-800 dark:text-stone-100 transition-colors duration-300 min-h-screen pb-24 flex flex-col">
 
-async function callGeminiAI(userPrompt, systemInstruction = "أنت شيف كولينا الذكي والمستشار الماهر في فنون الطهي والمطبخ الشرق أوسطي والعالمي. أجب بلغة عربية راقية وموجزة.") { 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`; 
-  const payload = { 
-    contents: [ 
-      { role: "user", parts: [{ text: `${systemInstruction}\n\nطلب المستخدم: ${userPrompt}` }] } 
-    ], 
-    generationConfig: { temperature: 0.7, maxOutputTokens: 800 } 
-  }; 
-  try { 
-    const response = await fetch(url, { 
-      method: "POST", 
-      headers: { "Content-Type": "application/json" }, 
-      body: JSON.stringify(payload) 
-    }); 
-    if (!response.ok) { 
-      throw new Error(`خطأ في استجابة الخادم: ${response.status}`); 
-    } 
-    const data = await response.json(); 
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أتمكن من إعداد الإجابة حالياً."; 
-  } catch (err) { 
-    console.error("Gemini API Error:", err); 
-    return "حدث خطأ أثناء الاتصال بالشيف الذكي. يرجى التحقق من الاتصال بالإنترنت والمحاولة مجدداً."; 
-  } 
-}
-</script>
-</body> </html>
+  <!-- شريط العنوان العلوي -->
+  <header class="sticky top-0 z-40 bg-[#fcf9f3]/95 dark:bg-[#121815]/95 backdrop-blur border-b border-stone-200 dark:border-stone-800 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <button onclick="toggleThemeMode()" type="button" class="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 transition text-stone-700 dark:text-stone-300">
+        <svg id="themeIconSun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <svg id="themeIconMoon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+      </button>
+      <button onclick="toggleLang()" type="button" class="px-2.5 py-1 text-xs font-bold border border-stone-300 dark:border-stone-700 rounded-lg hover:bg-stone-200 dark:hover:bg-stone-800 transition" id="langToggleBtn">
+        EN
+      </button>
+    </div>
+
+    <div onclick="navTo('home')" class="cursor-pointer flex items-center gap-1">
+      <span class="text-2xl font-serif font-bold text-emerald-800 dark:text-emerald-400">.culina</span>
+      <span class="w-2 h-2 rounded-full bg-amber-600 inline-block mb-1"></span>
+    </div>
+
+    <div class="flex items-center gap-1.5">
+      <button onclick="openAuthModal()" type="button" class="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 transition text-stone-700 dark:text-stone-300">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-lg mx-auto w-full px-4 py-4">
+    <!-- 1. الشاشة الرئيسية -->
+    <section id="view-home" class="page-sec space-y-6">
+      <div class="text-center pt-2 space-y-3">
+        <p class="text-[10px] uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold" data-i18n="heroSub">THE MIDDLE EASTERN KITCHEN</p>
+        <h1 class="hero-title text-4xl font-bold leading-tight text-stone-900 dark:text-white">Recipes with<br><span class="italic text-emerald-700 dark:text-emerald-400">a sense</span><br>.of place</h1>
+        <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed max-w-xs mx-auto" data-i18n="heroDesc">أطباق موثوقة من الشرق الأوسط، مكتوبة لمطابخنا اليومية. إرشاد هادئ ومساعد ذكي مدعوم بـ Google Gemini.</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="navTo('chat')" type="button" class="py-3 px-4 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-[#1a221e] shadow-sm font-bold text-xs text-stone-800 dark:text-stone-100 flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+          <span data-i18n="btnAskChef">اسأل الشيف</span>
+        </button>
+        <button onclick="navTo('generator')" type="button" class="py-3 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white shadow-md font-bold text-xs flex items-center justify-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+          <span data-i18n="btnGenRecipe">ابتكر وصفة</span>
+        </button>
+      </div>
+
+      <button onclick="getTodaySuggestion()" type="button" class="w-full py-2.5 px-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center justify-between">
+        <span class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          <span data-i18n="todaySuggest">اقتراح وجبة اليوم الفورية</span>
+        </span>
+        <span class="text-[10px] uppercase font-bold text-amber-600">Gemini</span>
+      </button>
+
+      <!-- سجل الوصفات الذكية -->
+      <div class="space-y-3 pt-2">
+        <div class="flex items-center justify-between">
+          <h3 class="font-bold text-stone-900 dark:text-white text-sm" data-i18n="savedDbTitle">📚 سجل الوصفات الذكية المولدة</h3>
+          <button onclick="toggleFavFilter()" id="favFilterBtn" class="text-xs px-2.5 py-1 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-[#1a221e] text-stone-700 dark:text-stone-300 font-bold">
+            <span data-i18n="showFavs">❤️ المفضلة</span>
+          </button>
+        </div>
+        <div id="aiGeneratedDatabase" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- 2. قسم ابتکار الوصفات -->
+    <section id="view-generator" class="page-sec hidden space-y-4">
+      <div class="pb-2 border-b border-stone-200 dark:border-stone-800">
+        <h2 class="text-lg font-bold text-stone-900 dark:text-white" data-i18n="genTitle">🍳 ابتكار الوصفات وحساب السعرات</h2>
+        <p class="text-xs text-stone-500" data-i18n="genDesc">أدخل المكونات المتوفرة لديك وسيقوم الذكاء الاصطناعي بتوليد الوصفة، حاسبة السعرات، وحفظها.</p>
+      </div>
+
+      <div class="bg-white dark:bg-[#1a221e] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 mb-1" data-i18n="ingLabel">المكونات المتوفرة:</label>
+          <input id="inputIngs" type="text" placeholder="مثال: دجاج، أرز، بصل، بهارات..." class="w-full px-3 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-600">
+        </div>
+
+        <button onclick="executeRecipeGen()" id="btnGenAction" type="button" class="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold text-xs shadow transition flex items-center justify-center gap-2">
+          <span data-i18n="btnExecuteGen">توليد الوصفة والصورة وحساب السعرات ✨</span>
+        </button>
+      </div>
+
+      <div id="genResultCard" class="hidden"></div>
+    </section>
+
+    <!-- 3. شات الشيف الذكي -->
+    <section id="view-chat" class="page-sec hidden flex flex-col h-[72vh]">
+      <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-800">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold">C</div>
+          <div>
+            <h3 class="text-xs font-bold text-stone-900 dark:text-white" data-i18n="chatChefName">مساعد كولينا الذكي</h3>
+            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Netlify Proxy • Gemini 1.5</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="chatScrollArea" class="flex-1 overflow-y-auto py-3 space-y-3 hide-scrollbar text-xs">
+        <div class="flex items-start gap-2 max-w-[85%]">
+          <div class="bg-white dark:bg-[#1a221e] p-3 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm leading-relaxed text-stone-800 dark:text-stone-200" data-i18n="chatWelcome">
+            أهلاً بك في كولينا! أنا مساعدك المباشر لجميع استفسارات الطهي والأغذية.
+          </div>
+        </div>
+      </div>
+
+      <form onsubmit="onChefChatSubmit(event)" class="relative mt-2">
+        <input id="chefInputField" type="text" placeholder="اكتب سؤالك هنا..." class="w-full px-4 py-3 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-[#1a221e] text-xs focus:outline-none focus:ring-2 focus:ring-emerald-600 pl-11 shadow-sm">
+        <button id="chefSendBtn" type="submit" class="absolute left-2 top-2 p-1.5 bg-emerald-700 text-white rounded-lg transition">
+          <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </form>
+    </section>
+
+    <!-- 4. حسابي والسياسات والخصوصية -->
+    <section id="view-profile" class="page-sec hidden space-y-4">
+      <div class="bg-white dark:bg-[#1a221e] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">C</div>
+          <div>
+            <h3 id="profileNameDisplay" class="font-bold text-stone-900 dark:text-white text-xs">زائر كولينا</h3>
+            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold" data-i18n="subStatus">باقة مجانية (Netlify Active)</span>
+          </div>
+        </div>
+        <button onclick="openAuthModal()" class="text-xs text-emerald-700 font-bold underline" data-i18n="loginBtn">تسجيل الدخول</button>
+      </div>
+
+      <div class="bg-white dark:bg-[#1a221e] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-3">
+        <h4 class="font-bold text-xs text-stone-900 dark:text-white border-b border-stone-100 dark:border-stone-800 pb-2" data-i18n="privacyTitle">🔒 الخصوصية والامتثال القوانين السعودية</h4>
+        <p class="text-[11px] text-stone-500 leading-relaxed" data-i18n="privacyBody">
+          تطبيق كولينا يلتزم تماماً بنظام حماية البيانات الشخصية (PDPL) بالمملكة العربية السعودية. تتم معالجة استعلاماتك عبر خادم Netlify آمن دون مشاركة أسرارك أو بياناتك مع أي طرف ثالث.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- نافذة تسجيل الدخول -->
+  <div id="authModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-white dark:bg-[#1a221e] w-full max-w-xs rounded-2xl p-5 space-y-4 border border-stone-200 dark:border-stone-800">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-sm text-stone-900 dark:text-white" data-i18n="modalAuthTitle">تسجيل الدخول</h3>
+        <button onclick="closeAuthModal()" class="text-stone-400 hover:text-stone-600">✕</button>
+      </div>
+      <p class="text-xs text-stone-500" data-i18n="modalAuthDesc">اختر وسيلة الدخول المناسبة لجهازك (iOS / Android):</p>
+      <div class="space-y-2">
+        <button onclick="loginWith('Apple')" class="w-full py-2.5 px-3 border border-stone-300 dark:border-stone-700 rounded-xl text-xs font-bold flex items-center justify-center gap-2 hover:bg-stone-100 dark:hover:bg-stone-800">
+          <span>Sign in with Apple (iOS)</span>
+        </button>
+        <button onclick="loginWith('Google')" class="w-full py-2.5 px-3 border border-stone-300 dark:border-stone-700 rounded-xl text-xs font-bold flex items-center justify-center gap-2 hover:bg-stone-100 dark:hover:bg-stone-800">
+          <span>Sign in with Google (Android)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- شريط التنقل السفلي -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#121815]/95 backdrop-blur border-t border-stone-200 dark:border-stone-800 py-2">
+    <div class="max-w-md mx-auto grid grid-cols-4 text-center text-[10px] font-bold text-stone-500">
+      <button onclick="navTo('home')" id="tabBtn-home" type="button" class="tab-btn text-emerald-700 dark:text-emerald-400 flex flex-col items-center gap-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        <span data-i18n="tabHome">الرئيسية</span>
+      </button>
+      <button onclick="navTo('generator')" id="tabBtn-generator" type="button" class="tab-btn flex flex-col items-center gap-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+        <span data-i18n="tabGen">ابتكار</span>
+      </button>
+      <button onclick="navTo('chat')" id="tabBtn-chat" type="button" class="tab-btn flex flex-col items-center gap-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+        <span data-i18n="tabChat">المساعد</span>
+      </button>
+      <button onclick="navTo('profile')" id="tabBtn-profile" type="button" class="tab-btn flex flex-col items-center gap-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        <span data-i18n="tabProfile">حسابي</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    let currentLang = 'ar';
+    let generatedDatabase = JSON.parse(localStorage.getItem('culina_db') || '[]');
+    let showFavsOnly = false;
+
+    const i18n = {
+      ar: {
+        heroSub: "المطبخ الشرق أوسطي",
+        heroDesc: "أطباق موثوقة من الشرق الأوسط، مكتوبة لمطابخنا اليومية. إرشاد هادئ ومساعد ذكي مدعوم بـ Google Gemini.",
+        btnAskChef: "اسأل الشيف",
+        btnGenRecipe: "ابتكر وصفة",
+        todaySuggest: "اقتراح وجبة اليوم الفورية",
+        savedDbTitle: "📚 سجل الوصفات الذكية المولدة",
+        genTitle: "🍳 ابتكار الوصفات وحساب السعرات",
+        genDesc: "أدخل المكونات المتوفرة لديك وسيقوم الذكاء الاصطناعي بتوليد الوصفة، حاسبة السعرات، وحفظها.",
+        ingLabel: "المكونات المتوفرة:",
+        btnExecuteGen: "توليد الوصفة والصورة وحساب السعرات ✨",
+        chatChefName: "مساعد كولينا الذكي",
+        chatWelcome: "أهلاً بك في كولينا! أنا مساعدك المباشر لجميع استفسارات الطهي والأغذية.",
+        subStatus: "باقة مجانية (Netlify Active)",
+        loginBtn: "تسجيل الدخول",
+        privacyTitle: "🔒 الخصوصية والامتثال القوانين السعودية",
+        privacyBody: "تطبيق كولينا يلتزم تماماً بنظام حماية البيانات الشخصية (PDPL) بالمملكة العربية السعودية. تتم معالجة استعلاماتك عبر خادم Netlify آمن دون مشاركة أسرارك أو بياناتك مع أي طرف ثالث.",
+        modalAuthTitle: "تسجيل الدخول",
+        modalAuthDesc: "اختر وسيلة الدخول المناسبة لجهازك (iOS / Android):",
+        tabHome: "الرئيسية", tabGen: "ابتكار", tabChat: "المساعد", tabProfile: "حسابي",
+        showFavs: "❤️ المفضلة", showAll: "📚 الكل",
+        copyBtn: "📋 نسخ", copied: "تم النسخ!", deleteBtn: "🗑️ حذف"
+      },
+      en: {
+        heroSub: "THE MIDDLE EASTERN KITCHEN",
+        heroDesc: "Authentic recipes from the Middle East for daily cooking. Guided by Google Gemini AI.",
+        btnAskChef: "Ask Chef",
+        btnGenRecipe: "Generate",
+        todaySuggest: "Today's Instant Recipe Suggestion",
+        savedDbTitle: "📚 AI Generated Recipe Archive",
+        genTitle: "🍳 Recipe Generation & Calories",
+        genDesc: "Enter your ingredients to generate a full recipe, caloric breakdown, and saved entry.",
+        ingLabel: "Available Ingredients:",
+        btnExecuteGen: "Generate Recipe, Image & Calories ✨",
+        chatChefName: "Culina AI Assistant",
+        chatWelcome: "Welcome to Culina! I am your AI cooking assistant.",
+        subStatus: "Free Plan (Netlify Active)",
+        loginBtn: "Sign In",
+        privacyTitle: "🔒 Privacy & Saudi PDPL Compliance",
+        privacyBody: "Culina strictly complies with Saudi Personal Data Protection Law (PDPL). Your requests are safely proxied.",
+        modalAuthTitle: "Sign In",
+        modalAuthDesc: "Choose sign-in option for your device (iOS / Android):",
+        tabHome: "Home", tabGen: "Create", tabChat: "Assistant", tabProfile: "Profile",
+        showFavs: "❤️ Favorites", showAll: "📚 All",
+        copyBtn: "📋 Copy", copied: "Copied!", deleteBtn: "🗑️ Delete"
+      }
+    };
+
+    function toggleLang() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.getElementById('langToggleBtn').textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[currentLang][key]) el.textContent = i18n[currentLang][key];
+      });
+      renderSavedDatabase();
+    }
+
+    function toggleThemeMode() {
+      const html = document.documentElement;
+      const sun = document.getElementById('themeIconSun');
+      const moon = document.getElementById('themeIconMoon');
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        sun.classList.add('hidden');
+        moon.classList.remove('hidden');
+      } else {
+        html.classList.add('dark');
+        moon.classList.add('hidden');
+        sun.classList.remove('hidden');
+      }
+    }
+
+    function navTo(page) {
+      document.querySelectorAll('.page-sec').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById('view-' + page);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('text-emerald-700', 'dark:text-emerald-400');
+        el.classList.add('text-stone-500');
+      });
+      const active = document.getElementById('tabBtn-' + page);
+      if (active) {
+        active.classList.remove('text-stone-500');
+        active.classList.add('text-emerald-700', 'dark:text-emerald-400');
+      }
+      window.scrollTo(0, 0);
+    }
+
+    // الربط المباشر والكامل مع Netlify Proxy
+    async function callGeminiAI(userPrompt, systemInstruction) {
+      const response = await fetch('/.netlify/functions/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: userPrompt,
+          systemInstruction: systemInstruction
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Proxy Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، متعذر الوصول للخدمة حالياً.";
+    }
+
+    async function executeRecipeGen() {
+      const val = document.getElementById('inputIngs').value.trim();
+      const btn = document.getElementById('btnGenAction');
+      const resCard = document.getElementById('genResultCard');
+
+      if (!val) { alert(currentLang === 'ar' ? 'يرجى إدخال المكونات!' : 'Please enter ingredients!'); return; }
+
+      btn.disabled = true;
+      btn.textContent = currentLang === 'ar' ? 'جاري الابتكار وحساب السعرات... ⏳' : 'Generating Recipe & Calories... ⏳';
+
+      try {
+        const sysPrompt = "أنت الشيف كولينا. ابتكر وصفة باللغة العربية وتكون متضمنة: 1. اسم الوجبة 2. السعرات الحرارية التقريبية 3. المكونات 4. خطوات التحضير.";
+        const prompt = `ابتكر وجبة طعام ممتازة باستخدام المكونات التالية: ${val}`;
+        const reply = await callGeminiAI(prompt, sysPrompt);
+
+        const imageUrl = `https://source.unsplash.com/600x400/?food,${encodeURIComponent(val)}`;
+
+        const newRecipe = {
+          id: Date.now(),
+          title: val,
+          content: reply,
+          image: imageUrl,
+          isFav: false,
+          date: new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US')
+        };
+
+        generatedDatabase.unshift(newRecipe);
+        localStorage.setItem('culina_db', JSON.stringify(generatedDatabase));
+        renderSavedDatabase();
+
+        resCard.classList.remove('hidden');
+        resCard.innerHTML = `
+          <div class="bg-white dark:bg-[#1a221e] border border-stone-200 dark:border-stone-800 rounded-2xl overflow-hidden shadow-sm">
+            <img src="${imageUrl}" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'" class="w-full h-40 object-cover" alt="Recipe Image">
+            <div class="p-4 space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">تم الحفظ تلقائياً</span>
+                <button onclick="copyToClipboard(\`${reply.replace(/`/g, '\\`')}\`)" class="text-xs px-2.5 py-1 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-bold">${i18n[currentLang].copyBtn}</button>
+              </div>
+              <div class="text-xs leading-relaxed whitespace-pre-line text-stone-800 dark:text-stone-200">${reply}</div>
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+        alert(currentLang === 'ar' ? 'حدث خطأ أثناء الاتصال بالذكاء الاصطناعي. تأكد من اكتمال نشر Netlify.' : 'AI Service Error. Check Netlify deployment.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = i18n[currentLang].btnExecuteGen;
+      }
+    }
+
+    async function getTodaySuggestion() {
+      navTo('generator');
+      document.getElementById('inputIngs').value = currentLang === 'ar' ? "دجاج، أرز، بهارات كبسة" : "Chicken, Rice, Spices";
+      executeRecipeGen();
+    }
+
+    function toggleFav(id) {
+      generatedDatabase = generatedDatabase.map(item => item.id === id ? { ...item, isFav: !item.isFav } : item);
+      localStorage.setItem('culina_db', JSON.stringify(generatedDatabase));
+      renderSavedDatabase();
+    }
+
+    function deleteRecipe(id) {
+      generatedDatabase = generatedDatabase.filter(item => item.id !== id);
+      localStorage.setItem('culina_db', JSON.stringify(generatedDatabase));
+      renderSavedDatabase();
+    }
+
+    function toggleFavFilter() {
+      showFavsOnly = !showFavsOnly;
+      const btn = document.getElementById('favFilterBtn');
+      btn.textContent = showFavsOnly ? i18n[currentLang].showAll : i18n[currentLang].showFavs;
+      renderSavedDatabase();
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert(i18n[currentLang].copied);
+      });
+    }
+
+    function renderSavedDatabase() {
+      const box = document.getElementById('aiGeneratedDatabase');
+      if (!box) return;
+
+      const list = showFavsOnly ? generatedDatabase.filter(i => i.isFav) : generatedDatabase;
+
+      if (list.length === 0) {
+        box.innerHTML = `<p class="text-xs text-stone-400 text-center py-4">${showFavsOnly ? 'لا توجد وصفات مفضلة حالياً.' : 'لا توجد وصفات مولدة بعد.'}</p>`;
+        return;
+      }
+
+      box.innerHTML = list.map(item => `
+        <div class="bg-white dark:bg-[#1a221e] rounded-2xl border border-stone-200 dark:border-stone-800 overflow-hidden shadow-sm flex flex-col sm:flex-row">
+          <img src="${item.image}" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'" class="w-full sm:w-28 h-28 object-cover">
+          <div class="p-3 flex-1 space-y-1">
+            <div class="flex justify-between items-center">
+              <span class="text-[10px] text-stone-400">${item.date}</span>
+              <div class="flex gap-2">
+                <button onclick="toggleFav(${item.id})" class="text-xs">${item.isFav ? '❤️' : '🤍'}</button>
+                <button onclick="deleteRecipe(${item.id})" class="text-xs text-rose-500">${i18n[currentLang].deleteBtn}</button>
+              </div>
+            </div>
+            <p class="text-xs text-stone-700 dark:text-stone-300 line-clamp-3 whitespace-pre-line">${item.content}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function onChefChatSubmit(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('chefInputField');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const box = document.getElementById('chatScrollArea');
+      box.innerHTML += `<div class="flex justify-end"><div class="bg-emerald-700 text-white p-2.5 rounded-2xl max-w-[85%] text-xs">${val}</div></div>`;
+      input.value = '';
+      box.scrollTop = box.scrollHeight;
+
+      const loaderId = 'loader-' + Date.now();
+      box.innerHTML += `<div id="${loaderId}" class="flex justify-start"><div class="bg-stone-200 dark:bg-stone-800 p-2.5 rounded-2xl text-xs animate-pulse">جاري الكتابة... ✍️</div></div>`;
+      box.scrollTop = box.scrollHeight;
+
+      try {
+        const reply = await callGeminiAI(val, "أنت شيف كولينا المباشر والذكي، أجب باختصار وبأسلوب راقٍ.");
+        document.getElementById(loaderId)?.remove();
+        box.innerHTML += `<div class="flex justify-start"><div class="bg-white dark:bg-[#1a221e] border border-stone-200 dark:border-stone-800 p-2.5 rounded-2xl max-w-[85%] text-xs text-stone-800 dark:text-stone-200 whitespace-pre-line">${reply}</div></div>`;
+      } catch (err) {
+        document.getElementById(loaderId)?.remove();
+        box.innerHTML += `<div class="flex justify-start"><div class="bg-rose-100 text-rose-800 p-2.5 rounded-2xl text-xs">تعذر الاتصال بالمساعد. تأكد من إعداد سيرفر Netlify.</div></div>`;
+      }
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
+    function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+    function loginWith(provider) {
+      document.getElementById('profileNameDisplay').textContent = `مستخدم ${provider}`;
+      closeAuthModal();
+      alert(`تم تسجيل الدخول بنجاح عبر ${provider}`);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderSavedDatabase();
+    });
+  </script>
+</body>
+</html>
