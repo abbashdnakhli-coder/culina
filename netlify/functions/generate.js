@@ -19,20 +19,21 @@ exports.handler = async function(event, context) {
   if (!API_KEY) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "GEMINI_API_KEY غير معرف في بيئة Netlify" })
+      body: JSON.stringify({ error: 'GEMINI_API_KEY غير معرف في Netlify' })
     };
   }
 
   try {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
 
+    // استخدام نموذج gemini-2.5-flash المستقر بدلاً من الموديلات القديمة
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: `${systemInstruction || ''}\n\n${prompt || ''}` }] }]
+          contents: [{ role: 'user', parts: [{ text: `${systemInstruction || ''}\n\n${prompt}` }] }]
         })
       }
     );
@@ -40,7 +41,7 @@ exports.handler = async function(event, context) {
     const data = await response.json();
 
     return {
-      statusCode: 200,
+      statusCode: response.status,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
