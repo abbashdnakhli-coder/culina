@@ -4,7 +4,7 @@ exports.handler = async function(event, context) {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type, x-goog-api-key',
+        'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
       }
     };
@@ -27,14 +27,12 @@ exports.handler = async function(event, context) {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
     const fullPrompt = systemInstruction ? `${systemInstruction}\n\n${prompt}` : prompt;
 
+    // استخدام النموذج المحدث والمستقر
     const response = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY.trim()}`,
       {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'x-goog-api-key': API_KEY.trim()
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: fullPrompt }] }]
         })
@@ -43,23 +41,13 @@ exports.handler = async function(event, context) {
 
     const data = await response.json();
 
-    // استخراج نص الإجابة المباشر لمنع ظهور [object Object]
-    const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text || "لم يتم استلام رد من النموذج";
-
     return {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        candidates: [{
-          content: {
-            parts: [{ text: textOutput }]
-          }
-        }],
-        text: textOutput
-      })
+      body: JSON.stringify(data)
     };
   } catch (error) {
     return {
@@ -72,3 +60,4 @@ exports.handler = async function(event, context) {
     };
   }
 };
+
