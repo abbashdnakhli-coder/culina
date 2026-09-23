@@ -27,9 +27,9 @@ exports.handler = async function(event, context) {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
     const fullPrompt = systemInstruction ? `${systemInstruction}\n\n${prompt}` : prompt;
 
-    // استخدام النموذج المحدث والمستقر
+    // استخدام الموديل القياسي والمستقر gemini-1.5-flash
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY.trim()}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY.trim()}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -41,13 +41,30 @@ exports.handler = async function(event, context) {
 
     const data = await response.json();
 
+    if (data.error) {
+      return {
+        statusCode: response.status || 400,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ error: data.error.message || 'خطأ من Gemini API' })
+      };
+    }
+
+    const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text || "لم يتم استلام رد من النموذج";
+
     return {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        ...data,
+        text: textOutput,
+        reply: textOutput
+      })
     };
   } catch (error) {
     return {
@@ -60,4 +77,3 @@ exports.handler = async function(event, context) {
     };
   }
 };
-
