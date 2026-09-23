@@ -309,10 +309,10 @@
       window.scrollTo(0, 0);
     }
 
-    // الربط مع دالة Netlify الأصلية والمباشرة
+    // الربط الصحيح والمطابق تماماً لرابط Netlify الخاص بك
     async function callGeminiAI(userPrompt, systemInstruction) {
       try {
-        const response = await fetch('https://culina.netlify.app/.netlify/functions/generate', {
+        const response = await fetch('https://mic-puppy-d7510e.netlify.app/.netlify/functions/generate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
