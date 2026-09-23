@@ -23,8 +23,8 @@ exports.handler = async function(event, context) {
     };
   }
 
-  // قائمة الموديلات للتحويل التلقائي في حال الضغط
-  const models = ['gemini-2.5-flash', 'gemini-1.5-flash'];
+  // استخدام gemini-2.5-flash كخيار مستقر مع gemini-3.6.5-pro كاحتياطي
+  const models = ['gemini-2.5-flash', 'gemini-3.6-pro'];
 
   try {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
@@ -33,7 +33,6 @@ exports.handler = async function(event, context) {
     let responseData = null;
     let lastError = null;
 
-    // التجربة على الموديل الأول، وإذا وجد ضغطاً ينتقل للثاني
     for (const model of models) {
       try {
         const res = await fetch(
@@ -49,7 +48,6 @@ exports.handler = async function(event, context) {
 
         const data = await res.json();
 
-        // إذا نجح الطلب ولم يوجد خطأ ضغط السيرفر
         if (res.ok && !data.error) {
           responseData = data;
           break;
@@ -65,7 +63,7 @@ exports.handler = async function(event, context) {
       return {
         statusCode: 503,
         headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: `السيرفر مشغول حالياً، يرجى إعادة المحاولة: ${lastError}` })
+        body: JSON.stringify({ error: `السيرفر مشغول حالياً، يرجى إعادة المحاولة بعد لحظات: ${lastError}` })
       };
     }
 
