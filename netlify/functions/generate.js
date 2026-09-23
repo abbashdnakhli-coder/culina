@@ -43,13 +43,23 @@ exports.handler = async function(event, context) {
 
     const data = await response.json();
 
+    // استخراج نص الإجابة المباشر لمنع ظهور [object Object]
+    const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text || "لم يتم استلام رد من النموذج";
+
     return {
-      statusCode: response.status,
+      statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        candidates: [{
+          content: {
+            parts: [{ text: textOutput }]
+          }
+        }],
+        text: textOutput
+      })
     };
   } catch (error) {
     return {
