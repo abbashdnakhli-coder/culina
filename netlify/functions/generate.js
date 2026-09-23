@@ -23,8 +23,8 @@ exports.handler = async function(event, context) {
     };
   }
 
-  // استخدام gemini-2.5-flash كخيار مستقر مع gemini-2.5-pro كاحتياطي
-  const models = ['gemini-2.5-flash', 'gemini-2.5-pro'];
+  // استخدام الموديلات الموصى بها رسمياً للحسابات الجديدة
+  const models = ['gemini-3.1-pro-preview', 'gemini-3.6-flash'];
 
   try {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
@@ -63,7 +63,7 @@ exports.handler = async function(event, context) {
       return {
         statusCode: 503,
         headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: `السيرفر مشغول حالياً، يرجى إعادة المحاولة بعد لحظات: ${lastError}` })
+        body: JSON.stringify({ error: `السيرفر مشغول حالياً، يرجى إعادة المحاولة: ${lastError}` })
       };
     }
 
