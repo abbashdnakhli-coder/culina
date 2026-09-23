@@ -4,7 +4,7 @@ exports.handler = async function(event, context) {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, x-goog-api-key',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
       }
     };
@@ -27,12 +27,14 @@ exports.handler = async function(event, context) {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
     const fullPrompt = systemInstruction ? `${systemInstruction}\n\n${prompt}` : prompt;
 
-    // استخدام الموديل المطلوب والمحدث المباشر: gemini-2.5-flash
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${API_KEY}`,
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-goog-api-key': API_KEY.trim()
+        },
         body: JSON.stringify({
           contents: [{ parts: [{ text: fullPrompt }] }]
         })
@@ -42,7 +44,7 @@ exports.handler = async function(event, context) {
     const data = await response.json();
 
     return {
-      statusCode: 200,
+      statusCode: response.status,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
@@ -52,6 +54,10 @@ exports.handler = async function(event, context) {
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ error: error.message || 'حدث خطأ غير متوقع' })
     };
   }
