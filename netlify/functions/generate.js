@@ -23,23 +23,51 @@ exports.handler = async function(event, context) {
     };
   }
 
+  // قائمة الموديلات للتحويل التلقائي في حال الضغط
+  const models = ['gemini-2.5-flash', 'gemini-1.5-flash'];
+
   try {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
     const fullPrompt = systemInstruction ? `${systemInstruction}\n\n${prompt}` : prompt;
 
-    // استخدام الموديل المطلوب: gemini-2.5-flash
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: fullPrompt }] }]
-        })
-      }
-    );
+    let responseData = null;
+    let lastError = null;
 
-    const data = await response.json();
+    // التجربة على الموديل الأول، وإذا وجد ضغطاً ينتقل للثاني
+    for (const model of models) {
+      try {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${API_KEY.trim()}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: fullPrompt }] }]
+            })
+          }
+        );
+
+        const data = await res.json();
+
+        // إذا نجح الطلب ولم يوجد خطأ ضغط السيرفر
+        if (res.ok && !data.error) {
+          responseData = data;
+          break;
+        } else {
+          lastError = data.error?.message || 'High demand';
+        }
+      } catch (err) {
+        lastError = err.message;
+      }
+    }
+
+    if (!responseData) {
+      return {
+        statusCode: 503,
+        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: `السيرفر مشغول حالياً، يرجى إعادة المحاولة: ${lastError}` })
+      };
+    }
 
     return {
       statusCode: 200,
@@ -47,11 +75,12 @@ exports.handler = async function(event, context) {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(responseData)
     };
   } catch (error) {
     return {
       statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: error.message || 'حدث خطأ غير متوقع' })
     };
   }
