@@ -23,8 +23,8 @@ exports.handler = async function(event, context) {
     };
   }
 
-  // استخدام gemini-2.5-flash كخيار مستقر مع gemini-3.6.5-pro كاحتياطي
-  const models = ['gemini-2.5-flash', 'gemini-3.6-pro'];
+  // استخدام gemini-2.5-flash كخيار مستقر مع gemini-2.5-pro كاحتياطي
+  const models = ['gemini-2.5-flash', 'gemini-2.5-pro'];
 
   try {
     const { prompt, systemInstruction } = JSON.parse(event.body || '{}');
